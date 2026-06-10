@@ -8,9 +8,9 @@ const SUIT_SYMBOL: Record<Suit, string> = {
 };
 
 const SUIT_COLOR: Record<Suit, string> = {
-  ouros: '#e74c3c',
+  ouros: '#2c3e50',
   espadas: '#2c3e50',
-  copas: '#e74c3c',
+  copas: '#2c3e50',
   paus: '#2c3e50',
 };
 
