@@ -1,5 +1,5 @@
-import { Card, Rank, SUIT_ORDER } from './types';
-import { isManilha } from './manilha';
+import { Card, Rank, SUIT_ORDER } from './types.js';
+import { isManilha } from './manilha.js';
 
 export function compareCards(
   a: Card,

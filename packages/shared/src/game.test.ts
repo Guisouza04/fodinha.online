@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { compareCards, getTrickWinner } from './cards';
-import { getManilhaRank } from './manilha';
-import { getCardsPerPlayer } from './round';
-import { isValidBid } from './bidding';
+import { compareCards, getTrickWinner } from './cards.js';
+import { getManilhaRank } from './manilha.js';
+import { getCardsPerPlayer } from './round.js';
+import { isValidBid } from './bidding.js';
 import {
   canStartGame,
   createInitialGameState,
@@ -13,8 +13,8 @@ import {
   resolveTrickEnd,
   sanitizeStateForPlayer,
   startGame,
-} from './game';
-import { PlayerState } from './types';
+} from './game.js';
+import { PlayerState } from './types.js';
 
 function makePlayers(count: number): PlayerState[] {
   return Array.from({ length: count }, (_, i) => ({
