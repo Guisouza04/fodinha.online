@@ -1,0 +1,16 @@
+{
+  "name": "fodinha",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @fodinha/server\" \"npm run dev -w @fodinha/client\"",
+    "build": "npm run build -w @fodinha/shared && npm run build -w @fodinha/server && npm run build -w @fodinha/client",
+    "test": "npm run test -w @fodinha/shared"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
