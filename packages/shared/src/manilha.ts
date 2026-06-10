@@ -1,4 +1,4 @@
-import { Card, Rank, RANKS } from './types';
+import { Card, Rank, RANKS } from './types.js';
 
 const RANK_CYCLE: Rank[] = [...RANKS, RANKS[0]];
 

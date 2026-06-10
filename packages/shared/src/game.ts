@@ -1,8 +1,8 @@
-import { calculateLivesLost, isValidBid } from './bidding';
-import { getTrickWinner } from './cards';
-import { cardsEqual, createDeck, shuffleDeck } from './deck';
-import { getManilhaRank } from './manilha';
-import { getCardsPerPlayer } from './round';
+import { calculateLivesLost, isValidBid } from './bidding.js';
+import { getTrickWinner } from './cards.js';
+import { cardsEqual, createDeck, shuffleDeck } from './deck.js';
+import { getManilhaRank } from './manilha.js';
+import { getCardsPerPlayer } from './round.js';
 import {
   Card,
   GameState,
@@ -10,7 +10,7 @@ import {
   PlayerState,
   RoundResult,
   RoundState,
-} from './types';
+} from './types.js';
 
 export function createInitialGameState(
   players: PlayerState[],
