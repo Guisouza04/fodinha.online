@@ -22,8 +22,8 @@ import {
   submitBid,
   submitCard,
   toggleReady,
-} from './rooms';
-import { schedulePhaseAdvance } from './phaseAdvance';
+} from './rooms.js';
+import { schedulePhaseAdvance } from './phaseAdvance.js';
 
 const PORT = process.env.PORT || 3001;
 

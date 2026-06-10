@@ -3,7 +3,7 @@ import {
   GameState,
   resolveTrickEnd,
 } from '@fodinha/shared';
-import { Room } from './rooms';
+import { Room } from './rooms.js';
 
 const TRICK_END_MS = 2800;
 const ROUND_END_MS = 4500;
