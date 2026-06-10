@@ -319,7 +319,7 @@ export default function GamePage() {
           )}
 
           {gameState.phase === 'trick_end' && (
-            <p className="waiting-msg">Aguardando próxima vaza...</p>
+            <p className="waiting-msg">Aguardando próxima jogada...</p>
           )}
 
           {gameState.phase === 'round_end' && (

@@ -15,7 +15,7 @@ export default function TrickResultOverlay({
   return (
     <div className="result-overlay trick-result">
       <div className="result-card trick-result-card">
-        <p className="result-eyebrow">Vaza encerrada</p>
+        <p className="result-eyebrow">Rodada encerrada</p>
         <h2 className="result-title" style={{ color: winner?.color }}>
           {winner?.name} levou!
         </h2>

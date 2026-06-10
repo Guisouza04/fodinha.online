@@ -323,7 +323,7 @@ function applyRoundResults(state: GameState): GameState {
 
 export function resolveTrickEnd(state: GameState): GameState {
   if (state.phase !== 'trick_end' || !state.round) {
-    throw new Error('Não está na fase de fim de vaza');
+    throw new Error('Não está na fase de fim de jogada');
   }
 
   const allCardsPlayed = getActivePlayers(state).every((p) => p.hand.length === 0);
@@ -333,7 +333,7 @@ export function resolveTrickEnd(state: GameState): GameState {
   }
 
   const winnerId = state.round.lastTrickWinnerId;
-  if (!winnerId) throw new Error('Vencedor da vaza não encontrado');
+  if (!winnerId) throw new Error('Vencedor da jogada não encontrado');
 
   return {
     ...state,

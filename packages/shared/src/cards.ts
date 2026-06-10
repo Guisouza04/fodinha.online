@@ -30,7 +30,7 @@ export function getTrickWinner(
   manilhaRank: Rank
 ): string {
   if (played.length === 0) {
-    throw new Error('Nenhuma carta jogada na vaza');
+    throw new Error('Nenhuma carta jogada na rodada');
   }
 
   let winner = played[0];
