@@ -122,6 +122,12 @@ export default function GamePage() {
           )}
         </header>
 
+        {gameState.tiebreaker && (
+          <div className="tiebreaker-banner">
+            Rodada de desempate — todos jogam com 1 vida!
+          </div>
+        )}
+
         {blindFirstRound && (
           <div className="blind-round-banner">
             Rodada especial: você vê as cartas dos oponentes, mas não a sua.

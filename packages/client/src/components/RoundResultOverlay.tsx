@@ -9,11 +9,18 @@ export default function RoundResultOverlay({
 }) {
   const roundNumber = gameState.round?.number ?? 0;
 
+  const isTiebreaker = gameState.tiebreaker;
+
   return (
     <div className="result-overlay round-result">
       <div className="result-card round-result-card">
         <p className="result-eyebrow">Fim da rodada {roundNumber}</p>
         <h2 className="result-title">Resultado dos palpites</h2>
+        {isTiebreaker && (
+          <p className="tiebreaker-notice">
+            Empate! Todos voltam com 1 vida para o desempate.
+          </p>
+        )}
 
         <ul className="round-result-list">
           {results.map((result) => {

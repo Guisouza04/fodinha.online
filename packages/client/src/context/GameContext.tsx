@@ -58,6 +58,27 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const socket = getSocket();
 
+    const handleConnect = () => {
+      const storedCode = localStorage.getItem('fodinha_room_code');
+      const storedName = localStorage.getItem('fodinha_player_name');
+      if (!storedCode || !storedName) return;
+
+      socket.emit(
+        'room:join',
+        { code: storedCode, playerId, playerName: storedName, playerColor: '' },
+        (res: { ok: boolean; error?: string }) => {
+          if (!res.ok) {
+            localStorage.removeItem('fodinha_room_code');
+            setRoomCode(null);
+            setRoomInfo(null);
+            setGameState(null);
+          }
+        }
+      );
+    };
+
+    socket.on('connect', handleConnect);
+
     socket.on('room:info', (info: RoomInfo) => {
       setRoomInfo(info);
       setRoomCode(info.code);
@@ -77,11 +98,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
     });
 
     return () => {
+      socket.off('connect', handleConnect);
       socket.off('room:info');
       socket.off('game:state');
       socket.off('error');
     };
-  }, []);
+  }, [playerId]);
 
   const createRoom = useCallback(
     (playerName: string, playerColor: string, config: RoomConfig) =>

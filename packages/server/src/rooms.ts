@@ -85,12 +85,12 @@ export function joinRoom(
   const room = getRoom(code);
   if (!room) throw new Error('Sala não encontrada');
 
+  const existing = room.gameState.players.find((p) => p.id === playerId);
+  if (existing) return room;
+
   if (room.gameState.phase !== 'lobby' && room.gameState.phase !== 'game_over') {
     throw new Error('Partida já em andamento');
   }
-
-  const existing = room.gameState.players.find((p) => p.id === playerId);
-  if (existing) return room;
 
   if (room.gameState.players.length >= room.config.maxPlayers) {
     throw new Error('Sala cheia');

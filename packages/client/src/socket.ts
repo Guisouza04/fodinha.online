@@ -16,7 +16,7 @@ function getServerUrl(): string {
 
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io(getServerUrl(), { autoConnect: true });
+    socket = io(getServerUrl(), { autoConnect: true, transports: ['websocket'] });
   }
   return socket;
 }

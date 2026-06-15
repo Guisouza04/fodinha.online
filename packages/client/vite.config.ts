@@ -22,6 +22,9 @@ export default defineConfig({
       '/socket.io': {
         target: 'http://localhost:3001',
         ws: true,
+        configure: (proxy) => {
+          proxy.on('error', () => { /* suppress ECONNRESET on disconnect */ });
+        },
       },
     },
   },
