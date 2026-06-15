@@ -70,6 +70,7 @@ export interface GameState {
   winnerId: string | null;
   maxPlayers: number;
   initialLives: number;
+  tiebreaker: boolean;
 }
 
 export interface RoomConfig {

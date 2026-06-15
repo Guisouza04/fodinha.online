@@ -32,6 +32,7 @@ export function createInitialGameState(
     winnerId: null,
     maxPlayers,
     initialLives,
+    tiebreaker: false,
   };
 }
 
@@ -135,10 +136,15 @@ function getBidOrder(
   return order;
 }
 
-function getNextDealerId(active: PlayerState[], currentDealerId: string): string {
-  const idx = active.findIndex((p) => p.id === currentDealerId);
-  const nextIdx = idx >= 0 ? (idx + 1) % active.length : 0;
-  return active[nextIdx].id;
+function getNextDealerId(allPlayers: PlayerState[], currentDealerId: string): string {
+  const idx = allPlayers.findIndex((p) => p.id === currentDealerId);
+  if (idx < 0) return allPlayers.find((p) => !p.eliminated)!.id;
+  const n = allPlayers.length;
+  for (let i = 1; i <= n; i++) {
+    const next = allPlayers[(idx + i) % n];
+    if (!next.eliminated) return next.id;
+  }
+  throw new Error('Nenhum jogador vivo encontrado');
 }
 
 export function placeBid(
@@ -308,9 +314,13 @@ function applyRoundResults(state: GameState): GameState {
     };
   });
 
+  const allEliminatedSimultaneously =
+    roundResults.length > 0 && roundResults.every((r) => r.eliminated);
+
   return {
     ...state,
     phase: 'round_end',
+    tiebreaker: allEliminatedSimultaneously,
     players,
     round: {
       ...state.round,
@@ -357,16 +367,42 @@ export function advanceAfterRoundEnd(
 
   const alive = state.players.filter((p) => !p.eliminated);
 
-  if (alive.length <= 1) {
+  if (alive.length === 1) {
     return {
       ...state,
       phase: 'game_over',
-      winnerId: alive[0]?.id ?? null,
+      winnerId: alive[0].id,
     };
   }
 
-  const nextDealerId = getNextDealerId(alive, state.round.dealerId);
-  return startRound(state, state.round.number + 1, nextDealerId, random);
+  if (alive.length === 0) {
+    // Desempate: todos os ativos foram eliminados na mesma rodada
+    const justEliminatedIds = new Set(
+      (state.round.roundResults ?? [])
+        .filter((r) => r.eliminated)
+        .map((r) => r.playerId)
+    );
+
+    const restoredPlayers = state.players.map((p) =>
+      justEliminatedIds.has(p.id) ? { ...p, lives: 1, eliminated: false } : p
+    );
+
+    const nextDealerId = getNextDealerId(restoredPlayers, state.round.dealerId);
+    return startRound(
+      { ...state, players: restoredPlayers, tiebreaker: true },
+      state.round.number + 1,
+      nextDealerId,
+      random
+    );
+  }
+
+  const nextDealerId = getNextDealerId(state.players, state.round.dealerId);
+  return startRound(
+    { ...state, tiebreaker: false },
+    state.round.number + 1,
+    nextDealerId,
+    random
+  );
 }
 
 export function isBlindFirstRound(state: GameState): boolean {

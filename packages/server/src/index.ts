@@ -200,6 +200,6 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`Servidor Fodinha rodando na porta ${PORT}`);
+httpServer.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
